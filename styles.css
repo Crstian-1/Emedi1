@@ -1,0 +1,1361 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #e0e0e0; /* Color de fondo gris claro */
+    margin: 0;
+    overflow-x: hidden; /* Evita barras de desplazamiento horizontales */
+}
+
+/* Base container styles for both login and register */
+.login-container, .register-container {
+    background-color: #e0e0e0; /* Mismo color de fondo para el contenedor */
+    padding: 40px 20px;
+    border-radius: 15px;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: none; /* No hay sombra en el diseño del PDF */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    /* transition: opacity 0.5s ease, transform 0.5s ease; */ /* Para animar la transición */
+}
+
+.login-container.hidden, .register-container.hidden {
+    display: none; /* Controlado por JavaScript */
+    /* opacity: 0; */
+    /* transform: translateY(20px); */
+}
+
+.avatar-circle {
+    width: 150px;
+    height: 150px;
+    background-color: #1a4970; /* Azul oscuro aproximado del PDF */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.avatar-icon {
+    width: 90px;
+    height: 90px;
+    fill: white;
+}
+
+.input-group {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: white; /* Fondo blanco para los inputs */
+    border: 2px solid black; /* Borde negro delgado */
+    border-radius: 30px; /* Bordes redondeados */
+    margin-bottom: 25px;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.input-wrapper .icon {
+    font-size: 24px;
+    margin-right: 15px;
+    color: black; /* Color de los iconos */
+}
+
+.input-wrapper input {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    font-size: 1.1em;
+    padding: 5px 0;
+    color: #333;
+    background-color: transparent;
+}
+
+.input-wrapper input::placeholder {
+    color: #888;
+}
+
+.login-button, .register-button {
+    background-color: #007bff; /* Azul estándar, ajustar si es necesario */
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 80%;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-button:hover, .register-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.emedi-logo {
+    margin-top: 50px;
+}
+.emedi-logo img {
+    width: 120px; /* Ajusta el tamaño del logo */
+    height: auto;
+}
+
+.register-toggle {
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.register-toggle a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-toggle a:hover {
+    text-decoration: underline;
+}
+
+/* Animaciones de entrada para la página de login */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.login-container, .register-container {
+    animation: fadeIn 1s ease-out forwards;
+}
+
+.input-wrapper {
+    animation: fadeIn 0.8s ease-out forwards;
+    animation-delay: 0.3s;
+    opacity: 0;
+}
+
+.login-button, .register-button {
+    animation: fadeIn 0.8s ease-out forwards;
+    animation-delay: 0.6s;
+    opacity: 0;
+}
+
+
+/* Dashboard Layout */
+.dashboard-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f5f5f5; /* Un gris muy claro para el fondo principal */
+}
+
+/* Top Bar con icono de usuario */
+.top-bar {
+    width: 100%;
+    height: 60px; /* Altura fija para la barra superior */
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: flex-end; /* Alinea el icono a la derecha */
+    align-items: center;
+    padding: 0 20px;
+    position: sticky; /* Se mantiene visible al hacer scroll */
+    top: 0;
+    z-index: 50; /* Asegura que esté por encima del contenido principal */
+}
+
+.user-profile-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #1a4970; /* Color del avatar */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.user-profile-icon:hover {
+    background-color: #0d3251;
+}
+
+.user-profile-icon svg {
+    width: 25px;
+    height: 25px;
+    fill: white;
+}
+
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    background-color: #f0f0f0; /* Gris ligeramente más oscuro que el fondo principal */
+    color: #333;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    transition: transform 0.3s ease-in-out;
+}
+
+.sidebar-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sidebar-logo {
+    width: 150px; /* Ajusta el tamaño del logo en el sidebar */
+    height: auto;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-nav li {
+    margin-bottom: 15px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: #555;
+    font-size: 1.1em;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+    background-color: #dcdcdc; /* Un gris más oscuro al pasar el ratón o activo */
+    color: #333;
+    font-weight: bold;
+}
+
+.sidebar-link .arrow {
+    font-weight: bold;
+    font-size: 1.2em;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+/* Cambiado para que solo rote si el submenu está abierto */
+.sidebar-link.active .arrow {
+    transform: rotate(90deg);
+}
+
+
+.submenu {
+    list-style: none;
+    padding-left: 20px;
+    margin-top: 10px;
+    max-height: 0; /* Oculto por defecto */
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, opacity 0.4s ease-out;
+    opacity: 0;
+}
+
+.submenu.show {
+    max-height: 500px; /* Suficientemente grande para mostrar todos los elementos */
+    opacity: 1;
+}
+
+.submenu li {
+    margin-bottom: 8px;
+}
+
+.submenu a {
+    text-decoration: none;
+    color: #666;
+    font-size: 0.95em;
+    padding: 8px 10px;
+    display: block;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.submenu a:hover {
+    background-color: #e9e9e9;
+    color: #333;
+}
+
+/* Main Content Area */
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+    overflow-y: auto;
+    background-color: white; /* Contenido principal en blanco */
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.content-section {
+    display: none; /* Oculta todas las secciones por defecto */
+    animation: fadeInContent 0.5s ease-out forwards;
+}
+
+.content-section.active {
+    display: block; /* Muestra la sección activa */
+}
+
+@keyframes fadeInContent {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Calendar Specific Styles */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.calendar-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.8em;
+}
+
+.calendar-header .nav-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease;
+}
+
+.calendar-header .nav-button:hover {
+    background-color: #0056b3;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border: 1px solid #ccc;
+    max-width: 900px; /* Ancho máximo para el calendario */
+    margin: 20px auto; /* Centrar el calendario */
+    background-color: white;
+}
+
+.day-name {
+    background-color: #f0f0f0;
+    padding: 15px 5px;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    font-size: 1.1em;
+}
+
+.day {
+    padding: 15px 5px;
+    border: 1px solid #ccc;
+    text-align: right;
+    font-size: 1.2em;
+    min-height: 100px; /* Altura mínima para cada día */
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.day:hover {
+    background-color: #f9f9f9;
+}
+
+.day.selected {
+    background-color: #e6f2ff; /* Color para el día seleccionado */
+    border: 2px solid #007bff;
+}
+
+.prev-month, .next-month {
+    color: #aaa; /* Días de meses anteriores/siguientes más tenues */
+}
+
+.current-month {
+    color: #333;
+}
+
+.domingo {
+    color: #dc3545; /* Rojo para los domingos */
+    font-weight: bold;
+}
+
+.red-text { /* Para los días 1, 5, 6, 12, 19, 26 */
+    color: #dc3545 !important;
+    font-weight: bold;
+}
+
+.has-event {
+    /* display: flex; */ /* Removido para permitir que el número del día esté arriba */
+    /* flex-direction: column; */
+    /* align-items: flex-end; */
+    /* justify-content: space-between; */
+    /* padding: 10px; */
+}
+
+.event-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-top: 5px;
+    /* align-self: center; */ /* Removido */
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.event-dot.green { background-color: #28a745; }
+.event-dot.blue { background-color: #007bff; }
+.event-dot.purple { background-color: #6f42c1; }
+
+
+/* Tooltip para eventos */
+.event-tooltip {
+    position: absolute;
+    bottom: 100%; /* Encima del día */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.85em;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 10;
+}
+
+.has-event:hover .event-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+.today-events {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.today-events h3 {
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.today-events ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.today-events li {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95em;
+    color: #555;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    cursor: pointer; /* Para indicar que se puede editar */
+    transition: background-color 0.2s ease;
+}
+
+.today-events li:hover {
+    background-color: #f0f0f0;
+}
+
+.today-events li .event-time {
+    font-weight: bold;
+    color: #007bff;
+    margin-right: 10px;
+}
+
+.today-events .add-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 20px;
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.3s ease;
+}
+
+.today-events .add-button:hover {
+    background-color: #0056b3;
+}
+
+
+/* Estilos para el formulario de Datos Generales y Ficha de Emergencia */
+.datos-generales-form, .emergency-card.datos-generales-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacio entre grupos de formulario */
+    max-width: 600px; /* Ancho máximo del formulario */
+    margin: 20px auto; /* Centrar el formulario en la sección */
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.datos-generales-form.hidden, .emergency-card.datos-generales-form.hidden {
+    display: none; /* Oculta el formulario cuando se muestran los datos registrados */
+}
+
+.data-display-area {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.data-display-area.hidden {
+    display: none; /* Oculta el área de visualización cuando se muestra el formulario */
+}
+
+.data-display-area h2 {
+    margin-top: 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.data-display-area p {
+    margin-bottom: 8px;
+    font-size: 1em;
+    color: #555;
+}
+
+.data-display-area p strong {
+    color: #333;
+    margin-right: 5px;
+    min-width: 150px; /* Alineación para las etiquetas */
+    display: inline-block;
+}
+
+.data-display-area .edit-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 20px;
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.3s ease;
+}
+
+.data-display-area .edit-button:hover {
+    background-color: #0056b3;
+}
+
+.medical-record-section {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #eee;
+}
+
+.medical-record-section:last-child {
+    border-bottom: none; /* No hay línea para la última sección */
+}
+
+.medical-record-section h3 {
+    color: #1a4970;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+}
+
+.medical-record-section p {
+    line-height: 1.6;
+    color: #444;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="number"],
+.form-group input[type="time"], /* Añadido para el input de hora */
+.form-group select,
+.form-group textarea {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box; /* Incluye padding y border en el ancho total */
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+.form-group textarea {
+    resize: vertical; /* Permite redimensionar verticalmente */
+    min-height: 80px;
+}
+
+/* Estilos específicos para el placeholder de la foto de perfil */
+.profile-photo .photo-placeholder {
+    width: 180px; /* Ajusta el tamaño del placeholder de la foto */
+    height: 180px;
+    background-color: #f0f0f0;
+    border: 2px dashed #a0a0a0;
+    border-radius: 10px;
+    margin: 15px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #666;
+    font-size: 0.9em;
+    cursor: pointer;
+    overflow: hidden; /* Para contener la imagen subida */
+    position: relative;
+}
+
+.photo-placeholder-display { /* Nuevo estilo para la foto ya cargada */
+    width: 180px;
+    height: 180px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 15px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: #f9f9f9;
+    color: #999;
+    font-size: 0.9em;
+}
+
+.photo-placeholder-display img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+
+.upload-button {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
+    z-index: 1; /* Asegura que el botón esté por encima de la imagen */
+}
+
+.upload-button:hover {
+    background-color: #0056b3;
+}
+
+/* Botón de Guardar */
+.save-button {
+    background-color: #28a745; /* Verde para guardar */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: fit-content; /* Se ajusta al contenido */
+    align-self: center; /* Centrar el botón */
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.save-button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.show-modal { /* CLASE PARA MOSTRAR MODAL */
+    display: flex;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    animation: zoomIn 0.3s ease-out;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal h2 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.modal .form-group {
+    margin-bottom: 15px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+.modal-buttons .save-button {
+    margin: 0; /* Anular margin-top de .save-button general */
+    width: 45%;
+}
+
+.modal-buttons .delete-button {
+    background-color: #dc3545; /* Rojo para eliminar */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 45%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-buttons .delete-button:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+}
+
+/* --- ESTILOS ESPECÍFICOS PARA FICHA DE EMERGENCIA (Imagen 1) --- */
+.emergency-card {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    font-size: 0.95em;
+}
+
+.emergency-card .card-header-emergency {
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.emergency-card .card-header-emergency h2 {
+    color: #1a4970;
+    margin: 0;
+    font-size: 1.8em;
+}
+
+.patient-details-emergency, .medical-details-emergency, .emergency-contact {
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.medical-details-emergency h3, .emergency-contact h3 {
+    color: #333;
+    font-size: 1.2em;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.detail-row {
+    display: flex;
+    margin-bottom: 8px;
+}
+
+.detail-row .label {
+    font-weight: bold;
+    color: #555;
+    min-width: 160px; /* Alineación para las etiquetas */
+    flex-shrink: 0; /* Evita que la etiqueta se encoja */
+}
+
+.detail-row .value {
+    color: #333;
+    flex-grow: 1; /* Permite que el valor ocupe el espacio restante */
+}
+
+.card-footer-emergency {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #777;
+}
+
+.card-footer-emergency .doctor-contact {
+    font-weight: bold;
+    color: #1a4970;
+    margin-top: 5px;
+}
+
+/* --- ESTILOS ESPECÍFICOS PARA CARTILLA DE VACUNACIÓN (Imagen 2) --- */
+.vaccination-card {
+    border: 2px solid #a0a0a0;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 900px; /* Ancho un poco más amplio para la tabla */
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    font-size: 0.95em;
+    overflow-x: auto; /* Permite scroll horizontal en tablas para móviles */
+}
+
+.vaccination-card .card-header {
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+    position: relative;
+}
+
+.vaccination-card .card-header h2 {
+    color: #007bff;
+    margin: 0;
+    font-size: 1.8em;
+}
+
+.vaccination-card .card-id {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 0.8em;
+    color: #888;
+}
+
+.vaccination-card .patient-info {
+    background-color: #f0f8ff; /* Azul claro para el fondo de info de paciente */
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #e0efff;
+}
+
+.vaccination-card .patient-info h3 {
+    color: #1a4970;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+}
+
+.vaccination-card .patient-info p {
+    margin-bottom: 5px;
+    color: #444;
+}
+
+.vaccination-card .patient-info span {
+    font-weight: bold;
+    color: #333;
+}
+
+.vaccine-table {
+    width: 100%; /* Asegura que la tabla ocupe todo el espacio disponible */
+    overflow-x: auto; /* Permite scroll horizontal si la tabla es muy ancha */
+}
+
+.vaccine-table table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px; /* Asegura que la tabla no sea demasiado estrecha en móviles */
+}
+
+.vaccine-table th, .vaccine-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+}
+
+.vaccine-table th {
+    background-color: #e9e9e9;
+    color: #333;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.vaccine-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.vaccine-table tbody tr:hover {
+    background-color: #f0f0f0;
+}
+
+/* Estilos para Mi Cuenta Blockchain */
+.blockchain-account-card {
+    border: 2px solid #5cb85c; /* Borde verde para algo "seguro" */
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #f9fff9; /* Fondo muy claro */
+    box-shadow: 0 4px 10px rgba(0,100,0,0.1);
+    font-size: 0.95em;
+}
+
+.card-header-blockchain {
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #d4edda; /* Borde suave */
+    padding-bottom: 15px;
+    position: relative;
+}
+
+.card-header-blockchain h2 {
+    color: #28a745; /* Verde de éxito */
+    margin: 0;
+    font-size: 1.8em;
+}
+
+.blockchain-account-card .account-status {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 0.8em;
+    color: #666;
+    background-color: #e2e3e5;
+    padding: 3px 8px;
+    border-radius: 5px;
+}
+
+.blockchain-account-card .account-details p {
+    margin-bottom: 8px;
+    word-wrap: break-word; /* Permite que los hashes largos se rompan */
+}
+
+.blockchain-account-card .account-details strong {
+    color: #333;
+}
+
+.blockchain-account-card .blockchain-note {
+    font-style: italic;
+    font-size: 0.85em;
+    color: #888;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Media Queries para Responsividad (existentes, con ajustes para los nuevos elementos) */
+
+/* Ajustes generales para pantallas más pequeñas que 768px (tablets y móviles) */
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        padding: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        position: relative;
+    }
+    .sidebar-nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .sidebar-nav li {
+        margin: 5px 10px;
+    }
+    .sidebar-link {
+        padding: 8px 12px;
+        font-size: 0.95em;
+    }
+    .submenu {
+        padding-left: 0;
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .main-content {
+        margin: 15px;
+        padding: 20px;
+    }
+    .top-bar {
+        justify-content: flex-end;
+        padding: 0 15px;
+    }
+    .user-profile-icon {
+        left: 15px;
+    }
+    .calendar-grid {
+        font-size: 0.85em;
+        grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+        gap: 1px;
+        margin: 10px auto;
+    }
+    .day {
+        min-height: 60px;
+        padding: 8px 3px;
+        font-size: 1em;
+        overflow: hidden;
+    }
+    .event-dot {
+        width: 10px;
+        height: 10px;
+        bottom: 3px;
+    }
+    .event-tooltip {
+        font-size: 0.75em;
+        padding: 5px 8px;
+    }
+    .today-events {
+        margin-top: 20px;
+        padding: 15px;
+    }
+    .today-events h3 {
+        font-size: 1.2em;
+    }
+    .today-events li {
+        padding: 8px 10px;
+        font-size: 0.9em;
+    }
+    .today-events .add-button {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+    .datos-generales-form, .data-display-area, .emergency-card, .blockchain-account-card {
+        margin: 10px;
+        padding: 15px;
+        gap: 10px;
+    }
+    .form-group label {
+        font-size: 0.9em;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+        padding: 8px 12px;
+        font-size: 0.95em;
+    }
+    .profile-photo .photo-placeholder, .photo-placeholder-display {
+        width: 140px;
+        height: 140px;
+    }
+    .upload-button {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+    .save-button {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+    .emergency-card {
+        font-size: 0.9em;
+    }
+    .card-header-emergency h2 {
+        font-size: 1.5em;
+    }
+    .detail-row .label {
+        min-width: 120px;
+    }
+    .vaccination-card {
+        font-size: 0.85em;
+    }
+    .vaccination-card .card-header h2 {
+        font-size: 1.5em;
+    }
+    .vaccine-table th, .vaccine-table td {
+        padding: 8px;
+        font-size: 0.8em;
+    }
+    .vaccine-table table {
+        min-width: 600px;
+    }
+}
+
+/* Ajustes específicos para pantallas muy pequeñas (celulares verticales, < 480px) */
+@media (max-width: 480px) {
+    body {
+        padding: 0 5px;
+        box-sizing: border-box;
+    }
+    .login-container, .register-container {
+        padding: 15px;
+        max-width: 100%;
+    }
+    .avatar-circle {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 20px;
+    }
+    .avatar-icon {
+        width: 50px;
+        height: 50px;
+    }
+    .input-wrapper {
+        padding: 6px 10px;
+        margin-bottom: 10px;
+    }
+    .input-wrapper .icon {
+        font-size: 20px;
+        margin-right: 10px;
+    }
+    .input-wrapper input {
+        font-size: 0.9em;
+    }
+    .login-button, .register-button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+        width: 95%;
+    }
+    .emedi-logo {
+        margin-top: 25px; /* Ajuste para el logo en la sección de registro también */
+    }
+    .emedi-logo img {
+        width: 80px;
+    }
+    .top-bar {
+        height: 50px;
+        padding: 0 10px;
+    }
+    .user-profile-icon {
+        width: 35px;
+        height: 35px;
+        left: 10px;
+    }
+    .user-profile-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+    .sidebar-nav ul {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .sidebar-nav li {
+        margin: 2px 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .sidebar-link {
+        font-size: 0.85em;
+        padding: 8px 5px;
+        justify-content: center;
+    }
+    .sidebar-link .arrow {
+        display: none;
+    }
+    .main-content {
+        margin: 5px;
+        padding: 10px;
+    }
+    .calendar-header h2 {
+        font-size: 1.2em;
+    }
+    .calendar-header .nav-button {
+        padding: 4px 8px;
+        font-size: 0.9em;
+    }
+    .day {
+        min-height: 40px;
+        padding: 3px 1px;
+        font-size: 0.8em;
+    }
+    .day-name {
+        font-size: 0.8em;
+        padding: 8px 3px;
+    }
+    .event-dot {
+        width: 8px;
+        height: 8px;
+        bottom: 2px;
+    }
+    .event-tooltip {
+        font-size: 0.7em;
+        padding: 4px 6px;
+    }
+    .today-events {
+        margin-top: 15px;
+        padding: 10px;
+    }
+    .today-events h3 {
+        font-size: 1em;
+    }
+    .today-events li {
+        padding: 6px 8px;
+        font-size: 0.85em;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 3px;
+    }
+    .today-events li .event-time {
+        margin-right: 0;
+    }
+    .today-events .add-button {
+        padding: 8px 15px;
+        font-size: 0.85em;
+    }
+    .modal-content {
+        width: 98%;
+        padding: 15px;
+    }
+    .modal h2 {
+        font-size: 1.3em;
+    }
+    .modal .form-group input, .modal .form-group select, .modal .form-group textarea {
+        font-size: 0.9em;
+        padding: 8px 10px;
+    }
+    .modal-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .modal-buttons .save-button, .modal-buttons .delete-button {
+        width: 100%;
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+    .emergency-card, .blockchain-account-card {
+        padding: 10px;
+        font-size: 0.8em;
+    }
+    .card-header-emergency h2, .card-header-blockchain h2 {
+        font-size: 1.2em;
+    }
+    .detail-row .label {
+        min-width: 100px;
+        margin-bottom: 5px;
+    }
+    .detail-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .vaccination-card {
+        padding: 10px;
+        font-size: 0.75em;
+    }
+    .vaccination-card .card-header h2 {
+        font-size: 1.2em;
+    }
+    .vaccine-table th, .vaccine-table td {
+        padding: 5px;
+        font-size: 0.75em;
+    }
+    .vaccine-table table {
+        min-width: 450px;
+    }
+    .blockchain-account-card .account-status {
+        position: static;
+        display: block;
+        text-align: center;
+        margin-top: 10px;
+    }
+}

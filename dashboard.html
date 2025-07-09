@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMEDI - Calendario y Expediente</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="emedi_logo.png" alt="EMEDI Logo" class="sidebar-logo">
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="sidebar-link active" data-content="calendar">Calendario</a></li>
+                    <li>
+                        <a href="#" class="sidebar-link" data-content="expediente-general">Expediente General <span class="arrow">></span></a>
+                        <ul class="submenu" id="expediente-submenu">
+                            <li><a href="#" data-content="historia-clinica">Historia Clínica</a></li>
+                            <li><a href="#" data-content="notas-medicas">Notas Médicas</a></li>
+                            <li><a href="#" data-content="notas-evolucion">Notas de Evolución (Ne)</a></li>
+                            <li><a href="#" data-content="notas-referencia">Notas de referencia o traslado</a></li>
+                            <li><a href="#" data-content="notas-interconsulta">Notas de Interconsulta</a></li>
+                            <li><a href="#" data-content="nota-pre-operatoria">Nota pre-operatoria (NPE-O)</a></li>
+                            <li><a href="#" data-content="nota-pre-anestesica">Nota pre-anestésica (NPE-A)</a></li>
+                            <li><a href="#" data-content="nota-post-operatoria">Nota post-operatoria (NPEO-Q)</a></li>
+                            <li><a href="#" data-content="nota-post-anestesica">Nota post-anestesica (NPO-A)</a></li>
+                            <li><a href="#" data-content="nota-egreso">Nota de Egreso</a></li>
+                            <li><a href="#" data-content="hoja-enfermeria">Hoja de enfermería</a></li>
+                            <li><a href="#" data-content="servicios-auxiliares">Servicios Auxiliares de diagnostico</a></li>
+                            <li><a href="#" data-content="registro-transfusion">Registro de la transfusión de sangre o sus componentes</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" class="sidebar-link" data-content="cartilla-vacunacion">Cartilla de vacunación <span class="arrow">></span></a></li>
+                    <li><a href="#" class="sidebar-link" data-content="ficha-emergencia">Ficha de Emergencia <span class="arrow">></span></a></li>
+                    <li><a href="#" class="sidebar-link" data-content="datos-generales">Datos generales <span class="arrow">></span></a></li>
+                    <li><a href="#" class="sidebar-link" data-content="my-blockchain-account">Mi Cuenta Blockchain</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content" id="main-content">
+            <div class="top-bar">
+                <div class="user-profile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div id="calendar-content" class="content-section active">
+                <div class="calendar-header">
+                    <button id="prevMonth" class="nav-button">&lt;</button>
+                    <h2 id="currentMonthYear"></h2>
+                    <button id="nextMonth" class="nav-button">&gt;</button>
+                </div>
+                <div class="calendar-grid" id="calendarGrid">
+                    </div>
+                <div class="today-events">
+                    <h3>Citas para <span id="selectedDateDisplay"></span></h3>
+                    <ul id="eventsList">
+                        </ul>
+                    <button id="addAppointmentButton" class="add-button">Agendar Nueva Cita</button>
+                </div>
+            </div>
+
+            <div id="expediente-general-content" class="content-section">
+                <h1>Expediente General</h1>
+                <p>Esta sección consolida la información clínica vital del paciente, ofreciendo un acceso rápido a su historial médico completo para una atención integral y coordinada. Incluye apartados detallados para una visión exhaustiva del estado de salud.</p>
+            </div>
+
+            <div id="historia-clinica-content" class="content-section">
+                <h2>Historia Clínica</h2>
+                <div class="medical-record-section">
+                    <h3>Anamnesis y Antecedentes Heredofamiliares</h3>
+                    <p>Recopilación exhaustiva de información médica pertinente, incluyendo antecedentes patológicos personales (APPs), no patológicos (APNPs), ginecoobstétricos (AGO), y antecedentes heredofamiliares (AHFs) para establecer un perfil de riesgo y contextualizar el estado de salud actual del paciente.</p>
+                </div>
+                <div class="medical-record-section">
+                    <h3>Padecimiento Actual</h3>
+                    <p>Descripción detallada de la sintomatología presente, cronología de los eventos, factores desencadenantes y atenuantes, así como tratamientos previos y su respuesta. Se utiliza la metodología "S.O.A.P." (Subjetivo, Objetivo, Análisis, Plan) para estructurar la información.</p>
+                </div>
+                <div class="medical-record-section">
+                    <h3>Exploración Física</h3>
+                    <p>Resultados de la evaluación física por sistemas y aparatos, incluyendo signos vitales (T/A, FC, FR, Temp, SatO2), somatometría (Peso, Talla, IMC), y hallazgos específicos relevantes para el padecimiento actual y antecedentes. Se enfatiza la objetividad y precisión de los datos.</p>
+                </div>
+            </div>
+
+            <div id="notas-medicas-content" class="content-section">
+                <h2>Notas Médicas</h2>
+                <div class="medical-record-section">
+                    <h3>Notas de Evolución (NE)</h3>
+                    <p>Registro cronológico de la evolución del paciente durante su estancia o seguimiento. Incluye: fecha, hora, síntomas subjetivos, hallazgos objetivos, análisis de la situación clínica, plan de tratamiento (medicamentos, estudios, interconsultas, indicaciones generales), y firma del médico.</p>
+                </div>
+                <div class="medical-record-section">
+                    <h3>Notas de Referencia o Traslado</h3>
+                    <p>Documento oficial para la transferencia de pacientes entre unidades médicas o especialistas. Contiene: motivo de referencia/traslado, diagnóstico presuntivo o definitivo, resumen clínico (antecedentes, padecimiento actual, exploración física, resultados de estudios), manejo realizado y justificación del traslado.</p>
+                </div>
+                <div class="medical-record-section">
+                    <h3>Notas de Interconsulta</h3>
+                    <p>Solicitud de opinión o atención a otro especialista. Detalla: motivo de la interconsulta, resumen clínico del paciente, preguntas específicas al interconsultante, y las respuestas o recomendaciones del especialista, integradas al plan de manejo.</p>
+                </div>
+            </div>
+
+            <div id="notas-evolucion-content" class="content-section">
+                <h2>Notas de Evolución (Ne)</h2>
+                <div class="medical-record-section">
+                    <h3>Evolución Clínica Diaria</h3>
+                    <p>Evaluación diaria del estado de salud del paciente. Incluye: síntomas actuales (Subjetivo), datos vitales y exploración (Objetivo), análisis de progresión/regresión (Análisis), y ajustes al plan de tratamiento, incluyendo dosis de medicamentos, dietas y actividades (Plan).</p>
+                </div>
+                <div class="medical-record-section">
+                    <h3>Resultados de Laboratorio y Gabinete</h3>
+                    <p>Interpretación de los resultados de estudios diagnósticos (hematología, química sanguínea, imagenología, etc.) y su impacto en el diagnóstico y manejo del paciente. Se compara con valores de referencia y con estudios previos.</p>
+                </div>
+            </div>
+
+            <div id="notas-referencia-content" class="content-section">
+                <h2>Notas de referencia o traslado</h2>
+                <div class="medical-record-section">
+                    <h3>Motivo de Referencia/Traslado</h3>
+                    <p>Especificación clara de la razón por la cual el paciente requiere ser transferido a otra unidad o especialista.</p>
+                </div>
+                <div class="medical-record-section">
+                    <h3>Resumen de Caso Clínico</h3>
+                    <p>Breve pero concisa descripción del historial médico del paciente, diagnóstico actual, tratamientos administrados y condición al momento del traslado.</p>
+                </div>
+            </div>
+
+            <div id="notas-interconsulta-content" class="content-section">
+                <h2>Notas de Interconsulta</h2>
+                <div class="medical-record-section">
+                    <h3>Solicitud y Motivo</h3>
+                    <p>Detalle de la especialidad solicitada y la pregunta clínica específica que se busca resolver con la interconsulta.</p>
+                </div>
+                <div class="medical-record-section">
+                    <h3>Recomendaciones del Especialista</h3>
+                    <p>Respuesta y sugerencias del médico interconsultado, incluyendo nuevas perspectivas diagnósticas o ajustes al plan terapéutico.</p>
+                </div>
+            </div>
+
+            <div id="nota-pre-operatoria-content" class="content-section">
+                <h2>Nota pre-operatoria (NPE-O)</h2>
+                <div class="medical-record-section">
+                    <h3>Evaluación Preoperatoria</h3>
+                    <p>Diagnóstico preoperatorio, plan quirúrgico, tipo de cirugía, riesgo quirúrgico (ASA), y plan de manejo postoperatorio. Se incluye la justificación y firma del cirujano.</p>
+                </div>
+            </div>
+
+            <div id="nota-pre-anestesica-content" class="content-section">
+                <h2>Nota pre-anestésica (NPE-A)</h2>
+                <div class="medical-record-section">
+                    <h3>Evaluación Preanestésica</h3>
+                    <p>Valoración del riesgo anestésico del paciente, plan anestésico, monitorización y cuidados específicos, firmada por el anestesiólogo.</p>
+                </div>
+            </div>
+
+            <div id="nota-post-operatoria-content" class="content-section">
+                <h2>Nota post-operatoria (NPEO-Q)</h2>
+                <div class="medical-record-section">
+                    <h3>Resumen de Procedimiento</h3>
+                    <p>Descripción del acto quirúrgico, hallazgos, complicaciones, sangrado, y especificaciones para el cuidado inmediato postoperatorio.</p>
+                </div>
+            </div>
+
+            <div id="nota-post-anestesica-content" class="content-section">
+                <h2>Nota post-anestesica (NPO-A)</h2>
+                <div class="medical-record-section">
+                    <h3>Recuperación Anestésica</h3>
+                    <p>Monitoreo de signos vitales, nivel de conciencia, dolor, náuseas, y estado general del paciente tras la anestesia, incluyendo egreso de sala de recuperación.</p>
+                </div>
+            </div>
+
+            <div id="nota-egreso-content" class="content-section">
+                <h2>Nota de Egreso</h2>
+                <div class="medical-record-section">
+                    <h3>Condiciones al Egreso</h3>
+                    <p>Diagnósticos finales, resumen de la evolución y manejo, plan de tratamiento al egreso (medicamentos, citas de seguimiento, signos de alarma), y recomendaciones generales.</p>
+                </div>
+            </div>
+
+            <div id="hoja-enfermeria-content" class="content-section">
+                <h2>Hoja de enfermería</h2>
+                <div class="medical-record-section">
+                    <h3>Registros de Enfermería</h3>
+                    <p>Documentación de signos vitales, administración de medicamentos, procedimientos realizados, balance hídrico, y observaciones pertinentes sobre el estado y cuidado del paciente.</p>
+                </div>
+            </div>
+
+            <div id="servicios-auxiliares-content" class="content-section">
+                <h2>Servicios Auxiliares de diagnostico</h2>
+                <div class="medical-record-section">
+                    <h3>Resultados de Laboratorio y Gabinete</h3>
+                    <p>Informe de los estudios de laboratorio (química sanguínea, biometría hemática, etc.) y de gabinete (rayos X, ultrasonido, TAC, RMN) solicitados, con sus valores y hallazgos.</p>
+                </div>
+            </div>
+
+            <div id="registro-transfusion-content" class="content-section">
+                <h2>Registro de la transfusión de sangre o sus componentes</h2>
+                <div class="medical-record-section">
+                    <h3>Detalle de Transfusión</h3>
+                    <p>Registro de la fecha, hora, tipo de componente sanguíneo, volumen, número de unidad, reacciones adversas y monitoreo del paciente durante y después de la transfusión.</p>
+                </div>
+            </div>
+
+            <div id="cartilla-vacunacion-content" class="content-section">
+                <h1>Cartilla de Vacunación</h1>
+                <div class="vaccination-card">
+                    <div class="card-header">
+                        <h2>Esquema de Vacunación</h2>
+                        <span class="card-id">ID: 0012345678</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="patient-info">
+                            <h3>Paciente: <span id="vac-patient-name">Juan Pérez García</span></h3>
+                            <p>CURP: <span id="vac-patient-curp">PAGJ850101HMNCR00</span></p>
+                            <p>Fecha de Nacimiento: <span id="vac-patient-dob">01/01/1985</span></p>
+                            <p>Sexo: <span id="vac-patient-gender">Masculino</span></p>
+                        </div>
+                        <div class="vaccine-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Vacuna</th>
+                                        <th>Dosis</th>
+                                        <th>Fecha Aplicación</th>
+                                        <th>Lote</th>
+                                        <th>Unidad/Responsable</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>BCG</td>
+                                        <td>Única</td>
+                                        <td>15/01/1985</td>
+                                        <td>BCG12345</td>
+                                        <td>Hospital Central / Dra. A. Ruiz</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hepatitis B</td>
+                                        <td>1ª Dosis</td>
+                                        <td>15/01/1985</td>
+                                        <td>HB67890</td>
+                                        <td>Hospital Central / Dra. A. Ruiz</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hepatitis B</td>
+                                        <td>2ª Dosis</td>
+                                        <td>15/02/1985</td>
+                                        <td>HB67891</td>
+                                        <td>Clínica Norte / Enf. M. López</td>
+                                    </tr>
+                                    <tr>
+                                        <td>DPT</td>
+                                        <td>1ª Dosis</td>
+                                        <td>15/03/1985</td>
+                                        <td>DPT11223</td>
+                                        <td>Hospital Central / Dra. A. Ruiz</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SPR</td>
+                                        <td>Única</td>
+                                        <td>01/01/1986</td>
+                                        <td>SPR99887</td>
+                                        <td>Clínica Centro / Enf. G. Torres</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tétanos</td>
+                                        <td>Refuerzo</td>
+                                        <td>05/05/2015</td>
+                                        <td>TET45678</td>
+                                        <td>Centro de Salud / Dr. J. Mora</td>
+                                    </tr>
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ficha-emergencia-content" class="content-section">
+                <h1>Ficha de Emergencia</h1>
+                <div id="emergency-data-display" class="emergency-card data-display-area">
+                    <div class="card-header-emergency">
+                        <h2>Tarjeta de Expediente Médico de Emergencia</h2>
+                    </div>
+                    <div class="patient-details-emergency">
+                        <div class="detail-row">
+                            <span class="label">Nombre Completo:</span>
+                            <span class="value" id="em-patient-name-display">N/A</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Fecha de Nacimiento:</span>
+                            <span class="value" id="em-patient-dob-display">N/A</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">CURP:</span>
+                            <span class="value" id="em-curp-display">N/A</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Grupo Sanguíneo:</span>
+                            <span class="value" id="em-blood-type-display">N/A</span>
+                        </div>
+                    </div>
+                    <div class="medical-details-emergency">
+                        <h3>Alertas Médicas y Alergias</h3>
+                        <div class="detail-row">
+                            <span class="label">Alergias:</span>
+                            <span class="value" id="em-allergies-display">N/A</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Padecimientos Crónicos:</span>
+                            <span class="value" id="em-chronic-conditions-display">N/A</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Medicamentos Actuales:</span>
+                            <span class="value" id="em-current-meds-display">N/A</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Dispositivos Médicos:</span>
+                            <span class="value" id="em-medical-devices-display">N/A</span>
+                        </div>
+                    </div>
+                    <div class="emergency-contact">
+                        <h3>Contacto de Emergencia</h3>
+                        <div class="detail-row">
+                            <span class="label">Nombre:</span>
+                            <span class="value" id="em-contact-name-display">N/A</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Teléfono:</span>
+                            <span class="value" id="em-contact-phone-display">N/A</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Relación:</span>
+                            <span class="value" id="em-contact-relation-display">N/A</span>
+                        </div>
+                    </div>
+                    <div class="card-footer-emergency">
+                        <p>Favor de contactar a su médico tratante si es posible.</p>
+                        <p class="doctor-contact">Dr. Ricardo Hernández: 55 9876 5432</p>
+                    </div>
+                    <button type="button" id="editEmergencyButton" class="edit-button">Editar Ficha</button>
+                </div>
+
+                <form id="emergency-data-form" class="emergency-card datos-generales-form hidden">
+                    <div class="card-header-emergency">
+                        <h2>Editar Tarjeta de Expediente Médico de Emergencia</h2>
+                    </div>
+                    <div class="patient-details-emergency">
+                        <div class="form-group">
+                            <label for="emPatientNameForm">Nombre Completo:</label>
+                            <input type="text" id="emPatientNameForm" name="emPatientNameForm" placeholder="Nombre completo del paciente">
+                        </div>
+                        <div class="form-group">
+                            <label for="emPatientDobForm">Fecha de Nacimiento:</label>
+                            <input type="date" id="emPatientDobForm" name="emPatientDobForm">
+                        </div>
+                        <div class="form-group">
+                            <label for="emCurpForm">CURP:</label>
+                            <input type="text" id="emCurpForm" name="emCurpForm" placeholder="CURP del paciente">
+                        </div>
+                        <div class="form-group">
+                            <label for="emBloodTypeForm">Grupo Sanguíneo:</label>
+                            <select id="emBloodTypeForm" name="emBloodTypeForm">
+                                <option value="">Selecciona</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="medical-details-emergency">
+                        <h3>Alertas Médicas y Alergias</h3>
+                        <div class="form-group">
+                            <label for="emAllergiesForm">Alergias:</label>
+                            <textarea id="emAllergiesForm" name="emAllergiesForm" rows="2" placeholder="Alergias a medicamentos, alimentos, etc."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="emChronicConditionsForm">Padecimientos Crónicos:</label>
+                            <textarea id="emChronicConditionsForm" name="emChronicConditionsForm" rows="2" placeholder="Diabetes, Hipertensión, Asma, etc."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="emCurrentMedsForm">Medicamentos Actuales:</label>
+                            <textarea id="emCurrentMedsForm" name="emCurrentMedsForm" rows="2" placeholder="Medicamentos de uso regular y dosis"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="emMedicalDevicesForm">Dispositivos Médicos:</label>
+                            <textarea id="emMedicalDevicesForm" name="emMedicalDevicesForm" rows="2" placeholder="Marcapasos, prótesis, etc."></textarea>
+                        </div>
+                    </div>
+                    <div class="emergency-contact">
+                        <h3>Contacto de Emergencia</h3>
+                        <div class="form-group">
+                            <label for="emContactNameForm">Nombre:</label>
+                            <input type="text" id="emContactNameForm" name="emContactNameForm" placeholder="Nombre del contacto">
+                        </div>
+                        <div class="form-group">
+                            <label for="emContactPhoneForm">Teléfono:</label>
+                            <input type="tel" id="emContactPhoneForm" name="emContactPhoneForm" placeholder="Teléfono del contacto">
+                        </div>
+                        <div class="form-group">
+                            <label for="emContactRelationForm">Relación:</label>
+                            <input type="text" id="emContactRelationForm" name="emContactRelationForm" placeholder="Relación con el paciente (Ej. Esposa)">
+                        </div>
+                    </div>
+                    <button type="submit" class="save-button">Guardar Ficha</button>
+                </form>
+            </div>
+
+
+            <div id="datos-generales-content" class="content-section">
+                <h1>Datos generales</h1>
+                <div id="datos-registrados" class="data-display-area">
+                    <h2>Datos Personales</h2>
+                    <p><strong>Nombre completo:</strong> <span id="display-nombreCompleto">N/A</span></p>
+                    <p><strong>CURP:</strong> <span id="display-curpGeneral">N/A</span></p>
+                    <p><strong>Fecha de nacimiento:</strong> <span id="display-fechaNacimiento">N/A</span></p>
+                    <p><strong>Grupo Sanguíneo:</strong> <span id="display-grupoSanguineo">N/A</span></p>
+                    <p><strong>Edad:</strong> <span id="display-edad">N/A</span></p>
+                    <p><strong>Sexo:</strong> <span id="display-sexo">N/A</span></p>
+                    <p><strong>Padecimientos generales:</strong> <span id="display-padecimientosGenerales">N/A</span></p>
+                    
+                    <div class="profile-photo-display">
+                        <h3>Fotografía de Perfil</h3>
+                        <div id="display-profilePhoto" class="photo-placeholder-display">
+                            <span>No hay foto cargada</span>
+                        </div>
+                    </div>
+                    <button type="button" id="editDatosButton" class="edit-button">Editar Datos</button>
+                </div>
+
+                <form id="datos-generales-form" class="datos-generales-form hidden">
+                    <div class="form-group">
+                        <label for="nombreCompletoForm">Nombre completo:</label>
+                        <input type="text" id="nombreCompletoForm" name="nombreCompletoForm" placeholder="Ingresa nombre completo">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="curpGeneralForm">CURP:</label>
+                        <input type="text" id="curpGeneralForm" name="curpGeneralForm" placeholder="Ingresa CURP">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fechaNacimientoForm">Fecha de nacimiento:</label>
+                        <input type="date" id="fechaNacimientoForm" name="fechaNacimientoForm">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="grupoSanguineoForm">Grupo Sanguíneo:</label>
+                        <select id="grupoSanguineoForm" name="grupoSanguineoForm">
+                            <option value="">Selecciona</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edadForm">Edad:</label>
+                        <input type="number" id="edadForm" name="edadForm" placeholder="Edad" min="0" max="120">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sexoForm">Sexo:</label>
+                        <select id="sexoForm" name="sexoForm">
+                            <option value="">Selecciona</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="padecimientosGeneralesForm">Padecimientos generales:</label>
+                        <textarea id="padecimientosGeneralesForm" name="padecimientosGeneralesForm" rows="4" placeholder="Describe padecimientos relevantes"></textarea>
+                    </div>
+
+                    <div class="profile-photo">
+                        <h3>Fotografía</h3>
+                        <div class="photo-placeholder">
+                            <label for="uploadPhoto">Subir Foto</label>
+                            <input type="file" id="uploadPhoto" name="uploadPhoto" accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="save-button">Guardar Datos</button>
+                </form>
+            </div>
+
+            <div id="my-blockchain-account-content" class="content-section">
+                <h1>Mi Cuenta Blockchain</h1> <div class="blockchain-account-card data-display-area">
+                    <div class="card-header-blockchain">
+                        <h2>Información de Cuenta Descentralizada</h2>
+                        <span class="account-status" id="blockchain-status">No registrada</span>
+                    </div>
+                    <div class="account-details">
+                        <p><strong>Dirección de Cuenta (Clave Pública):</strong> <span id="display-blockchain-address">N/A</span></p>
+                        <p><strong>CURP (Usuario Blockchain):</strong> <span id="display-blockchain-username">N/A</span></p>
+                        <p><strong>Estilo Codificado (Hash SHA-256):</strong> <span id="display-blockchain-style-hash">N/A</span></p>
+                        <p class="blockchain-note">Esta información representa una identidad única en un sistema descentralizado.</p> </div>
+                    <button type="button" id="registerBlockchainAccountButton" class="edit-button">Registrar / Actualizar Cuenta Blockchain</button>
+                    <button type="button" id="unlockBlockchainAccountButton" class="edit-button hidden">Desbloquear Cuenta Blockchain</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="appointmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Agendar/Editar Cita</h2>
+            <form id="appointmentForm">
+                <input type="hidden" id="appointmentId">
+                <div class="form-group">
+                    <label for="appointmentDate">Fecha:</label>
+                    <input type="date" id="appointmentDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="appointmentTime">Hora:</label>
+                    <input type="time" id="appointmentTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="appointmentDescription">Descripción:</label>
+                    <textarea id="appointmentDescription" rows="3" placeholder="Ej. Cita con el Dr. Pérez, Estudios de sangre" required></textarea>
+                </div>
+                <div class="modal-buttons">
+                    <button type="submit" class="save-button">Guardar Cita</button>
+                    <button type="button" id="deleteAppointmentButton" class="delete-button" style="display:none;">Eliminar Cita</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
