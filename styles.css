@@ -1,0 +1,942 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #e0e0e0; /* Color de fondo gris claro */
+    margin: 0;
+    overflow-x: hidden; /* Evita barras de desplazamiento horizontales */
+}
+
+/* Login Page Styles */
+.login-container {
+    background-color: #e0e0e0; /* Mismo color de fondo para el contenedor */
+    padding: 40px 20px;
+    border-radius: 15px;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: none; /* No hay sombra en el diseño del PDF */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.avatar-circle {
+    width: 150px;
+    height: 150px;
+    background-color: #1a4970; /* Azul oscuro aproximado del PDF */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.avatar-icon {
+    width: 90px;
+    height: 90px;
+    fill: white;
+}
+
+.input-group {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: white; /* Fondo blanco para los inputs */
+    border: 2px solid black; /* Borde negro delgado */
+    border-radius: 30px; /* Bordes redondeados */
+    margin-bottom: 25px;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.input-wrapper .icon {
+    font-size: 24px;
+    margin-right: 15px;
+    color: black; /* Color de los iconos */
+}
+
+.input-wrapper input {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    font-size: 1.1em;
+    padding: 5px 0;
+    color: #333;
+    background-color: transparent;
+}
+
+.input-wrapper input::placeholder {
+    color: #888;
+}
+
+.login-button {
+    background-color: #007bff; /* Azul estándar, ajustar si es necesario */
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 80%;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.emedi-logo img {
+    width: 120px; /* Ajusta el tamaño del logo */
+    height: auto;
+    margin-top: 50px;
+}
+
+/* Animaciones de entrada para la página de login */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.login-container {
+    animation: fadeIn 1s ease-out forwards;
+}
+
+.input-wrapper {
+    animation: fadeIn 0.8s ease-out forwards;
+    animation-delay: 0.3s;
+    opacity: 0;
+}
+
+.login-button {
+    animation: fadeIn 0.8s ease-out forwards;
+    animation-delay: 0.6s;
+    opacity: 0;
+}
+
+
+/* Dashboard Layout */
+.dashboard-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f5f5f5; /* Un gris muy claro para el fondo principal */
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    background-color: #f0f0f0; /* Gris ligeramente más oscuro que el fondo principal */
+    color: #333;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    transition: transform 0.3s ease-in-out;
+}
+
+.sidebar-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sidebar-logo {
+    width: 150px; /* Ajusta el tamaño del logo en el sidebar */
+    height: auto;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-nav li {
+    margin-bottom: 15px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: #555;
+    font-size: 1.1em;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+    background-color: #dcdcdc; /* Un gris más oscuro al pasar el ratón o activo */
+    color: #333;
+    font-weight: bold;
+}
+
+.sidebar-link .arrow {
+    font-weight: bold;
+    font-size: 1.2em;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+/* Cambiado para que solo rote si el submenu está abierto */
+.sidebar-link.active .arrow {
+    transform: rotate(90deg);
+}
+
+
+.submenu {
+    list-style: none;
+    padding-left: 20px;
+    margin-top: 10px;
+    max-height: 0; /* Oculto por defecto */
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, opacity 0.4s ease-out;
+    opacity: 0;
+}
+
+.submenu.show {
+    max-height: 500px; /* Suficientemente grande para mostrar todos los elementos */
+    opacity: 1;
+}
+
+.submenu li {
+    margin-bottom: 8px;
+}
+
+.submenu a {
+    text-decoration: none;
+    color: #666;
+    font-size: 0.95em;
+    padding: 8px 10px;
+    display: block;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.submenu a:hover {
+    background-color: #e9e9e9;
+    color: #333;
+}
+
+/* Main Content Area */
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+    overflow-y: auto;
+    background-color: white; /* Contenido principal en blanco */
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.content-section {
+    display: none; /* Oculta todas las secciones por defecto */
+    animation: fadeInContent 0.5s ease-out forwards;
+}
+
+.content-section.active {
+    display: block; /* Muestra la sección activa */
+}
+
+@keyframes fadeInContent {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Calendar Specific Styles */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.calendar-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.8em;
+}
+
+.calendar-header .nav-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease;
+}
+
+.calendar-header .nav-button:hover {
+    background-color: #0056b3;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border: 1px solid #ccc;
+    max-width: 900px; /* Ancho máximo para el calendario */
+    margin: 20px auto; /* Centrar el calendario */
+    background-color: white;
+}
+
+.day-name {
+    background-color: #f0f0f0;
+    padding: 15px 5px;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    font-size: 1.1em;
+}
+
+.day {
+    padding: 15px 5px;
+    border: 1px solid #ccc;
+    text-align: right;
+    font-size: 1.2em;
+    min-height: 100px; /* Altura mínima para cada día */
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.day:hover {
+    background-color: #f9f9f9;
+}
+
+.day.selected {
+    background-color: #e6f2ff; /* Color para el día seleccionado */
+    border: 2px solid #007bff;
+}
+
+.prev-month, .next-month {
+    color: #aaa; /* Días de meses anteriores/siguientes más tenues */
+}
+
+.current-month {
+    color: #333;
+}
+
+.domingo {
+    color: #dc3545; /* Rojo para los domingos */
+    font-weight: bold;
+}
+
+.red-text { /* Para los días 1, 5, 6, 12, 19, 26 */
+    color: #dc3545 !important;
+    font-weight: bold;
+}
+
+.has-event {
+    /* display: flex; */ /* Removido para permitir que el número del día esté arriba */
+    /* flex-direction: column; */
+    /* align-items: flex-end; */
+    /* justify-content: space-between; */
+    /* padding: 10px; */
+}
+
+.event-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-top: 5px;
+    /* align-self: center; */ /* Removido */
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.event-dot.green { background-color: #28a745; }
+.event-dot.blue { background-color: #007bff; }
+.event-dot.purple { background-color: #6f42c1; }
+
+
+/* Tooltip para eventos */
+.event-tooltip {
+    position: absolute;
+    bottom: 100%; /* Encima del día */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.85em;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 10;
+}
+
+.has-event:hover .event-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+.today-events {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.today-events h3 {
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.today-events ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.today-events li {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95em;
+    color: #555;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    cursor: pointer; /* Para indicar que se puede editar */
+    transition: background-color 0.2s ease;
+}
+
+.today-events li:hover {
+    background-color: #f0f0f0;
+}
+
+.today-events li .event-time {
+    font-weight: bold;
+    color: #007bff;
+    margin-right: 10px;
+}
+
+.today-events .add-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 20px;
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.3s ease;
+}
+
+.today-events .add-button:hover {
+    background-color: #0056b3;
+}
+
+
+/* Estilos para el formulario de Datos Generales */
+.datos-generales-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacio entre grupos de formulario */
+    max-width: 600px; /* Ancho máximo del formulario */
+    margin: 20px auto; /* Centrar el formulario en la sección */
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="number"],
+.form-group input[type="time"], /* Añadido para el input de hora */
+.form-group select,
+.form-group textarea {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box; /* Incluye padding y border en el ancho total */
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+.form-group textarea {
+    resize: vertical; /* Permite redimensionar verticalmente */
+    min-height: 80px;
+}
+
+/* Estilos específicos para el placeholder de la foto de perfil */
+.profile-photo .photo-placeholder {
+    width: 180px; /* Ajusta el tamaño del placeholder de la foto */
+    height: 180px;
+    background-color: #f0f0f0;
+    border: 2px dashed #a0a0a0;
+    border-radius: 10px;
+    margin: 15px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #666;
+    font-size: 0.9em;
+    cursor: pointer;
+    overflow: hidden; /* Para contener la imagen subida */
+    position: relative;
+}
+
+.profile-photo .photo-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.upload-button {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
+    z-index: 1; /* Asegura que el botón esté por encima de la imagen */
+}
+
+.upload-button:hover {
+    background-color: #0056b3;
+}
+
+/* Botón de Guardar */
+.save-button {
+    background-color: #28a745; /* Verde para guardar */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: fit-content; /* Se ajusta al contenido */
+    align-self: center; /* Centrar el botón */
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.save-button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+    justify-content: center;
+    align-items: center;
+    /* Usar clase para mostrar/ocultar con JS */
+}
+
+.modal.show-modal {
+    display: flex; /* La clase JS activará esto */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    animation: zoomIn 0.3s ease-out;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal h2 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.modal .form-group {
+    margin-bottom: 15px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+.modal-buttons .save-button {
+    margin: 0; /* Anular margin-top de .save-button general */
+    width: 45%;
+}
+
+.modal-buttons .delete-button {
+    background-color: #dc3545; /* Rojo para eliminar */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 45%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-buttons .delete-button:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+}
+
+
+/* --- Media Queries para Responsividad (Optimizado para móvil) --- */
+
+/* Ajustes generales para pantallas más pequeñas que 768px (tablets y móviles) */
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column; /* Coloca el sidebar encima del contenido principal */
+    }
+
+    .sidebar {
+        width: 100%; /* El sidebar ocupa todo el ancho */
+        height: auto; /* Altura automática */
+        padding: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        position: relative; /* Asegura que no se salga del flujo */
+    }
+
+    .sidebar-nav ul {
+        display: flex;
+        flex-wrap: wrap; /* Envuelve los elementos si no caben en una línea */
+        justify-content: center; /* Centra los elementos de navegación */
+    }
+
+    .sidebar-nav li {
+        margin: 5px 10px; /* Reduce el margen para compactar */
+    }
+
+    .sidebar-link {
+        padding: 8px 12px;
+        font-size: 0.95em;
+    }
+
+    /* Ajuste para el submenú en móvil: Permitir que se desborde si es necesario */
+    .submenu {
+        padding-left: 0;
+        text-align: center;
+        width: 100%; /* Asegura que el submenú también ocupe todo el ancho si aparece */
+        box-sizing: border-box; /* Incluye padding en el ancho */
+    }
+
+    .main-content {
+        margin: 15px; /* Reduce los márgenes generales */
+        padding: 20px;
+    }
+
+    .calendar-grid {
+        font-size: 0.85em; /* Reduce el tamaño de fuente del calendario */
+        /* Usar auto-fit y minmax para que las celdas se adapten mejor */
+        grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); /* Mínimo 40px, máximo 1fr */
+        gap: 1px; /* Espacio entre los días, puede ser útil reducirlo */
+        margin: 10px auto; /* Más compacto */
+    }
+
+    .day {
+        min-height: 60px; /* Reduce la altura mínima de los días */
+        padding: 8px 3px; /* Más compacto */
+        font-size: 1em; /* Ajusta el tamaño del número del día */
+        overflow: hidden; /* Oculta contenido extra si el espacio es limitado */
+    }
+
+    .event-dot {
+        width: 10px; /* Punto de evento más pequeño */
+        height: 10px;
+        bottom: 3px; /* Ajusta la posición */
+    }
+
+    .event-tooltip {
+        font-size: 0.75em; /* Tooltip más pequeño */
+        padding: 5px 8px;
+    }
+
+    .today-events {
+        margin-top: 20px; /* Menos margen superior */
+        padding: 15px; /* Menos padding */
+    }
+    .today-events h3 {
+        font-size: 1.2em; /* Título de eventos más pequeño */
+    }
+    .today-events li {
+        padding: 8px 10px; /* Menos padding en los elementos de la lista */
+        font-size: 0.9em;
+    }
+    .today-events .add-button {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+
+    /* Formularios generales */
+    .datos-generales-form {
+        margin: 10px;
+        padding: 15px;
+        gap: 10px; /* Menos espacio entre elementos del formulario */
+    }
+    .form-group label {
+        font-size: 0.9em;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+        padding: 8px 12px;
+        font-size: 0.95em;
+    }
+    .profile-photo .photo-placeholder {
+        width: 140px; /* Foto más pequeña */
+        height: 140px;
+    }
+    .upload-button {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+    .save-button {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+}
+
+/* Ajustes específicos para pantallas muy pequeñas (celulares verticales, < 480px) */
+@media (max-width: 480px) {
+    body {
+        /* Para asegurar que el body se adapte sin barras de desplazamiento */
+        padding: 0 5px; /* Un poco de padding horizontal para no pegar a los bordes */
+        box-sizing: border-box;
+    }
+
+    .login-container {
+        padding: 15px; /* Menos padding */
+        max-width: 100%; /* Ocupa todo el ancho disponible */
+    }
+
+    .avatar-circle {
+        width: 80px; /* Más pequeño */
+        height: 80px;
+        margin-bottom: 20px;
+    }
+
+    .avatar-icon {
+        width: 50px; /* Más pequeño */
+        height: 50px;
+    }
+
+    .input-wrapper {
+        padding: 6px 10px; /* Más compacto */
+        margin-bottom: 10px;
+    }
+
+    .input-wrapper .icon {
+        font-size: 20px; /* Icono más pequeño */
+        margin-right: 10px;
+    }
+
+    .input-wrapper input {
+        font-size: 0.9em; /* Fuente más pequeña */
+    }
+
+    .login-button {
+        padding: 10px 20px; /* Botón más pequeño */
+        font-size: 0.9em;
+        width: 95%; /* Ocupa más ancho */
+    }
+
+    .emedi-logo img {
+        width: 80px; /* Logo más pequeño */
+        margin-top: 25px;
+    }
+
+    .sidebar-nav ul {
+        flex-direction: column; /* Apila los elementos de navegación en el sidebar */
+        align-items: stretch; /* Estira los elementos para ocupar el ancho */
+    }
+
+    .sidebar-nav li {
+        margin: 2px 0; /* Ajusta el margen para elementos apilados */
+        width: 100%; /* Hace que los enlaces ocupen todo el ancho */
+        box-sizing: border-box;
+    }
+
+    .sidebar-link {
+        font-size: 0.85em;
+        padding: 8px 5px; /* Más compacto */
+        justify-content: center; /* Centra el texto del enlace si no hay flecha */
+    }
+    .sidebar-link .arrow {
+        /* Puedes ocultar la flecha en pantallas muy pequeñas si no hay espacio */
+        display: none;
+    }
+
+    .main-content {
+        margin: 5px; /* Menos margen */
+        padding: 10px; /* Menos padding */
+    }
+
+    .calendar-header h2 {
+        font-size: 1.2em; /* Título del calendario aún más pequeño */
+    }
+    .calendar-header .nav-button {
+        padding: 4px 8px; /* Botones de navegación más pequeños */
+        font-size: 0.9em;
+    }
+
+    .day {
+        min-height: 40px; /* Días aún más pequeños */
+        padding: 3px 1px;
+        font-size: 0.8em;
+    }
+    .day-name {
+        font-size: 0.8em; /* Nombre del día más pequeño */
+        padding: 8px 3px;
+    }
+
+    .event-dot {
+        width: 8px; /* Punto de evento aún más pequeño */
+        height: 8px;
+        bottom: 2px;
+    }
+    .event-tooltip {
+        font-size: 0.7em; /* Tooltip aún más pequeño */
+        padding: 4px 6px;
+    }
+
+    .today-events {
+        margin-top: 15px;
+        padding: 10px;
+    }
+    .today-events h3 {
+        font-size: 1em;
+    }
+    .today-events li {
+        padding: 6px 8px;
+        font-size: 0.85em;
+        flex-direction: column; /* Apila la hora y la descripción */
+        align-items: flex-start;
+        gap: 3px;
+    }
+    .today-events li .event-time {
+        margin-right: 0;
+    }
+    .today-events .add-button {
+        padding: 8px 15px;
+        font-size: 0.85em;
+    }
+
+    .modal-content {
+        width: 98%; /* Casi todo el ancho */
+        padding: 15px;
+    }
+    .modal h2 {
+        font-size: 1.3em;
+    }
+    .modal .form-group input, .modal .form-group select, .modal .form-group textarea {
+        font-size: 0.9em;
+        padding: 8px 10px;
+    }
+    .modal-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .modal-buttons .save-button, .modal-buttons .delete-button {
+        width: 100%;
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+}
